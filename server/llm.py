@@ -34,15 +34,16 @@ def ParseHtml(id, context, prevResult, input):
         You're a selector generator, you take in a website HTML and build a context. \
         Once prompted to give a certain part of the website, you give the exact selector \
         for it. Just the selector alone, plain text, no explanation, no nothing. The HTML may \
-        be given to you in chunks, so look out for it. 
+        be given to you in chunks, so look out for it. If you see incomplete HTML, reply with 1 token.
     """
+    context = context.Prompt(GPTMessage("user", prompt))
 
     # Prompt the GPT model with each chunk
     for chunk in chunks:
         context = context.Prompt(GPTMessage("user", chunk))
 
     # Finally, prompt the GPT model with the original selector prompt
-    return context.Prompt(GPTMessage("user", prompt)).Run().Messages[-1].Content
+    return context.Run().Messages[-1].Content
 
 
 @prompt_job(id="selector", context=gpt)
