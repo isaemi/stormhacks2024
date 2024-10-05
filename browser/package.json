@@ -15,6 +15,7 @@
   "dependencies": {
     "assemblyai": "^4.7.0",
     "axios": "^1.7.7",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "openai": "^4.67.1"
   }
 }
