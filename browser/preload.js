@@ -150,12 +150,12 @@ function handleVoiceCommand(command) {
           return;
         }
 
-        if (url.includes('www') && url.endsWith('.com')){
+        if (url.includes('www') && url.endsWith('.com')) {
           urlInput.value = `https://${url}`;
           urlInput.dispatchEvent(new KeyboardEvent('keypress', { key: 'Enter' }));
           return;
         }
-        
+
         // remove any symbols from the url
         url = url.replace(/[^a-zA-Z0-9]/g, '');
 
@@ -188,35 +188,43 @@ function handleVoiceCommand(command) {
     }
   }
 
-  // use axios to send the html content of the current site and the command to the server
-  // in the body of the POST
+  const webview = document.getElementById('webview');
 
-  const headers = {
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-  };
+  webview.executeJavaScript('document.documentElement.outerHTML')
+    .then(html => {
+      console.log('HTML content from webview:', html);
+      // Call the localhost API and send the HTML
+      const headers = {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      };
 
-  const body = {
-    html: JSON.stringify(document.documentElement.outerHTML),
-    prompt: JSON.stringify(command),
-  };
+      const body = {
+        html: html,
+        prompt: JSON.stringify(command),
+      };
 
-  console.log('Sending voice command:', body);
+      console.log('Sending voice command:', body);
 
-  let css_selector = null;
+      let css_selector = null;
 
-  axios.post('https://jrang188-server--8000.prod1.defang.dev/prompt', body, { headers })
-    .then(response => {
-      console.log(response.data);
-      css_selector = response.data;
-    }).catch(error => {
-      console.error('Error sending voice command:', error);
+      axios.post('http://localhost:8000/prompt', body, { headers })
+        .then(response => {
+          console.log(response.data);
+          css_selector = response.data;
+        }).catch(error => {
+          console.error('Error sending voice command:', error);
+        });
+
+      if (css_selector !== 1) {
+        const element = document.querySelector(css_selector);
+        if (element) {
+          element.click();
+        }
+      }
+    })
+    .catch(err => {
+      console.error('Error fetching HTML from webview:', err);
     });
 
-  if (css_selector !== 1) {
-    const element = document.querySelector(css_selector);
-    if (element) {
-      element.click();
-    }
-  }
 }
