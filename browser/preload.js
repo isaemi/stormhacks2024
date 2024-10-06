@@ -214,17 +214,25 @@ function handleVoiceCommand(command) {
       axios.post('http://localhost:8000/prompt', body, { headers })
         .then(response => {
           console.log(response.data);
-          css_selector = response.data;
-        }).catch(error => {
+          const css_selector = response.data;
+
+          // Check if the selector is valid and perform the click
+          if (css_selector !== 1) {
+            const element = document.querySelector(css_selector);
+            if (element) {
+              element.click();
+              console.log(`Clicked element: ${css_selector}`);
+            } else {
+              console.error(`No element found for selector: ${css_selector}`);
+            }
+          } else {
+            console.error('Invalid CSS selector');
+          }
+        })
+        .catch(error => {
           console.error('Error sending voice command:', error);
         });
 
-      if (css_selector !== 1) {
-        const element = document.querySelector(css_selector);
-        if (element) {
-          element.click();
-        }
-      }
     })
     .catch(err => {
       console.error('Error fetching HTML from webview:', err);
