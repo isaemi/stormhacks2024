@@ -4,6 +4,18 @@ const forwardButton = document.getElementById('forward');
 const refreshButton = document.getElementById('refresh');
 const homeButton = document.getElementById('home');
 const urlInput = document.getElementById('url');
+const loadingStreak = document.getElementById('loading-streak');
+
+// Show the loading streak when navigation starts
+webview.addEventListener('did-start-loading', () => {
+  loadingStreak.style.display = 'block';
+});
+
+// Hide the loading streak when navigation finishes
+webview.addEventListener('did-stop-loading', () => {
+  loadingStreak.style.display = 'none';
+});
+
 
 // Go back in the webview's history
 backButton.addEventListener('click', () => {
