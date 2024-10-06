@@ -113,7 +113,7 @@ function handleVoiceCommand(command) {
   } else if (command.includes('scroll right')) {
     window.scrollBy(100, 0);
     return;
-  } else if (command.includes('start') && document.getElementById('url') === "https://isaemi-app--80.prod1b.defang.dev/") {
+  } else if (command.includes('start')) {
     document.querySelector('.indexButton').click();
     return;
   } else {
