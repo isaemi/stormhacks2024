@@ -5,10 +5,10 @@ button.indexButton{
     border: solid 2px white;
     font-weight: bold;
     color: white;
-    box-shadow: 0 0 25px rgba(255, 255, 255, 1);
     margin: 50px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 1);
 }
 
 button.indexButton:hover{
-    box-shadow: 0 0 50px rgb(255, 137, 170);
+    box-shadow: 0 0 25px rgba(255, 255, 255, 1);
 }
