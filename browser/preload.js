@@ -96,4 +96,24 @@ function handleVoiceCommand(command) {
   } else if (command.includes('forward')) {
     window.history.forward();
   }
+
+  // use axios to send the html content of the current site and the command to the server
+  // in the body of the POST
+
+  const headers = {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+  };
+
+  const body = {
+    html: JSON.stringify(document.documentElement.outerHTML),
+    prompt:JSON.stringify(command),
+  };
+
+  axios.post('https://jrang188-server--8000.prod1.defang.dev/prompt', body, { headers })
+  .then(response => {
+    console.log(response.data);
+  }).catch(error => {
+    console.error('Error sending voice command:', error);
+  });
 }
