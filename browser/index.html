@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Emperor Browser</title>
+  <title>Sound Surf Browser</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     body {
@@ -15,11 +15,14 @@
       padding: 10px;
       display: flex;
       align-items: center;
+      border-bottom: 1px solid #666;
     }
 
     #toolbar button {
       background-color: #303134;
       color: #ffffff5e;
+      padding: 10px;
+      border-radius: 50%;
       border: none;
       margin-right: 10px;
       cursor: pointer;
@@ -27,17 +30,13 @@
       font-size: 15px;
     }
 
-    #toolbar button:hover {
-      background-color: #202124;
-    }
 
     #toolbar button:focus {
       outline: none;
     }
 
-    #address button{
+    .address {
       background: #202124;
-      border: 2px solid white;
     }
 
     #toolbar input[type="text"] {
@@ -49,18 +48,21 @@
       color: #fff;
       margin-left: 10px;
       transition: border 0.2s ease;
-      width: 350px;
+      width: 600px;
+      background: #202124;
     }
-
     #toolbar input[type="text"]:focus {
       outline: none;
-      border-color: #666;
+    }
+    #toolbar input[type="text"]:hover {
+      outline: none;
     }
     .address{
       color: white;
       background-color: #202124;
-      padding: 5px 10px;
       border-radius: 50px;
+      padding: 5px 10px;
+
     }
     #webview {
       width: 100%;
