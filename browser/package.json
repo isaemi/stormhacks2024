@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "electron .",
-    "build": "npx electron-packager . browser --platform=darwin --arch=x64 --icon=icon.png --out=dist/  --overwrite"
+    "build": "npx electron-packager . Sound-Surf-Browser --platform=darwin --arch=x64 --icon=icon.png --out=dist/  --overwrite"
   },
   "keywords": [],
   "author": "",
