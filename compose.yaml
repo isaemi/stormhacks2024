@@ -1,0 +1,12 @@
+services:
+  server:
+    restart: always
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - mode: ingress
+        target: 8000
+        published: 8000
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY}

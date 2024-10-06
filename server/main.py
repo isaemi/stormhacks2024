@@ -1,6 +1,6 @@
 from fastapi import Body, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from server.llm import selectorFinder, filter_html
+from llm import selectorFinder
 
 app = FastAPI()
 
