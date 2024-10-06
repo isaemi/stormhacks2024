@@ -211,7 +211,7 @@ function handleVoiceCommand(command) {
 
       let css_selector = null;
 
-      axios.post('http://localhost:8000/prompt', body, { headers })
+      axios.post('https://jrang188-server--8000.prod1.defang.dev/prompt', body, { headers })
         .then(response => {
           console.log(response.data);
           const css_selector = response.data;
