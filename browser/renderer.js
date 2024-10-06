@@ -45,3 +45,16 @@ urlInput.addEventListener('keypress', (e) => {
 webview.addEventListener('did-navigate', () => {
   urlInput.value = webview.getURL();
 });
+
+
+webview.addEventListener('did-fail-load', (event) => {
+    // Check if the load failed due to a bad URL
+    if (event.errorCode !== -3) {  // -3 means 'aborted', which is not an error
+      const failedUrl = urlInput.value;
+      
+      // Redirect to Google search
+      const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(failedUrl)}`;
+      webview.src = searchUrl;
+      urlInput.value = searchUrl;
+    }
+  });

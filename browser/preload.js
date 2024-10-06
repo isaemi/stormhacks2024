@@ -81,6 +81,7 @@ async function processAudio(audioChunks) {
       file: audioFile,
       model: 'whisper-1',
       response_format: "text",
+      prompt: "BestBuy"
     });
 
     console.log('Transcript:', transcription);
@@ -140,16 +141,48 @@ function handleVoiceCommand(command) {
         // go to the url in the next chunk
         let url = command_chunks[i + 2];
 
-        if (url.startsWith('http')) {
-          window.location.href = url;
+        const urlInput = document.getElementById('url');
+
+        if (url.startsWith('http') && url.endsWith('.com')) {
+          // find document by id and enter the url
+          urlInput.value = url;
+          urlInput.dispatchEvent(new KeyboardEvent('keypress', { key: 'Enter' }));
+          return;
+        }
+
+        if (url.includes('www') && url.endsWith('.com')){
+          urlInput.value = `https://${url}`;
+          urlInput.dispatchEvent(new KeyboardEvent('keypress', { key: 'Enter' }));
           return;
         }
         
         // remove any symbols from the url
         url = url.replace(/[^a-zA-Z0-9]/g, '');
 
-        window.location.href = `https://${url}.com`
+        urlInput.value = `https://${url}.com`;
+        urlInput.dispatchEvent(new KeyboardEvent('keypress', { key: 'Enter' }));
         console.log(`https://${url}.com`);
+        return;
+      }
+
+      if (chunk === 'search' && command_chunks[i + 1] === 'for' ||
+        chunk === 'look' && command_chunks[i + 1] === 'up') {
+        // search for everything after the word 'search' or 'look up'
+        let search_query = "";
+        for (let j = i + 2; j < command_chunks.length; j++) {
+          // if the chunk has a period, we have reached the end of the search query
+          if (command_chunks[j].includes('.')) {
+            search_query += command_chunks[j].replace('.', '');
+            break;
+          }
+
+          search_query += command_chunks[j] + " ";
+        }
+
+        // go google query
+        const urlInput = document.getElementById('url');
+        urlInput.value = `https://www.google.com/search?q=${search_query}`;
+        urlInput.dispatchEvent(new KeyboardEvent('keypress', { key: 'Enter' }));
         return;
       }
     }
