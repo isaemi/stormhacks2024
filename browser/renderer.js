@@ -26,7 +26,7 @@ refreshButton.addEventListener('click', () => {
 
 // Go to home page
 homeButton.addEventListener('click', () => {
-  webview.src = 'https://www.google.com';
+  webview.src = 'http://209.87.57.134:3000';
   urlInput.value = webview.src;
 });
 
