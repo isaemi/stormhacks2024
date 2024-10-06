@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoundSurf</title>
+    <style>
+        body, html {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .nav-bar {
+            background-color: #333;
+            padding: 10px;
+            display: flex;
+            justify-content: space-around;
+        }
+        .nav-button {
+            background-color: #666;
+            color: white;
+            border: none;   
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .content-area {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .section {
+            display: none;
+        }
+        .active-section {
+            display: block;
+        }
+        .widget {
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        #voice-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #f1f1f1;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        #grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    width: 100vw; 
+    height: 100vh;
+    pointer-events: none; 
+
+.cell {
+    border: 1px dashed #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+}
+
+#cursor {
+    position: absolute;
+    z-index: 11; 
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+#status {
+    position: fixed;
+    z-index: 12; 
+    top: 10px;
+    left: 10px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <div id="grid"></div>
+    <div id="cursor"></div>
+    <div id="status">Listening...</div>
+        <nav class="nav-bar">
+            <button class="nav-button" onclick="showSection('dashboard')">Dashboard</button>
+            <button class="nav-button" onclick="showSection('youtube')">YouTube</button>
+            <button class="nav-button" onclick="showSection('chat')">Chat Support</button>
+            <button class="nav-button" onclick="showSection('health')">Health</button>
+            <button class="nav-button" onclick="showSection('games')">Games</button>
+            <button class="nav-button" onclick="showSection('community')">Community</button>
+        </nav>
+
+        <div class="content-area">
+            <div id="dashboard" class="section active-section">
+                <h1>Welcome to Your Support Dashboard</h1>
+                <div class="widget">
+                    <h2>Quick Access</h2>
+                    <button class="nav-button" onclick="showSection('community')">Latest Forum Posts</button>
+                    <button class="nav-button" onclick="showSection('health')">Today's Exercises</button>
+                    <button class="nav-button" onclick="showSection('health')">Medication Reminder</button>
+                </div>
+            </div>
+
+            <div id="youtube" class="section">
+                <h1>YouTube Player</h1>
+                <div class="widget">
+                    <p>Voice-controlled YouTube player will be implemented here.</p>
+                </div>
+            </div>
+
+            <div id="chat" class="section">
+                <h1>Chat Support</h1>
+                <div class="widget">
+                    <div id="chat-messages" style="height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; margin-bottom: 10px;">
+                        <p><strong>Bot:</strong> Hello! How can I assist you today?</p>
+                    </div>
+                    <input type="text" id="chat-input" placeholder="Type or use voice to chat..." style="width: 80%;">
+                    <button class="nav-button" onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+
+            <div id="health" class="section">
+                <h1>Health Tracker</h1>
+                <div class="widget">
+                    <p>Your daily health summary and tracking tools will appear here.</p>
+                </div>
+            </div>
+
+            <div id="games" class="section">
+                <h1>Accessible Games</h1>
+                <div class="widget">
+                    <p>A selection of accessible games will be available here.</p>
+                </div>
+            </div>
+
+            <div id="community" class="section">
+                <h1>Community Forum</h1>
+                <div class="widget">
+                    <p>Connect with others and share experiences in our community forum.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="voice-control">
+        <button class="nav-button" onclick="toggleVoiceControl()">Toggle Voice Control</button>
+        <p id="voice-status">Voice control is off</p>
+    </div>
+
+</body>
+</html>
