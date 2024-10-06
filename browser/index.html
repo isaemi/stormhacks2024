@@ -11,54 +11,60 @@
     }
 
     #toolbar {
-      background-color: #333;
+      background-color: #493545;
       padding: 10px;
       display: flex;
       align-items: center;
-      border-bottom: 2px solid #444;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
 
     #toolbar button {
-      background-color: #444;
-      color: #fff;
+      background-color: #493545;
+      color: #ffffff5e;
       border: none;
       margin-right: 10px;
-      padding: 10px;
       cursor: pointer;
-      border-radius: 5px;
       transition: background-color 0.2s ease;
-      font-size: 18px;
+      font-size: 15px;
     }
 
     #toolbar button:hover {
-      background-color: #555;
+      background-color: #5C4A58;
     }
 
     #toolbar button:focus {
       outline: none;
     }
 
+    #address button{
+      background: #32202F;
+      border: 2px solid white;
+    }
+
     #toolbar input[type="text"] {
       flex-grow: 1;
-      padding: 10px;
       font-size: 16px;
-      border: 1px solid #444;
-      border-radius: 5px;
-      background-color: #222;
+      border: none;
+      border-radius: 50px;
+      background-color: transparent;
       color: #fff;
       margin-left: 10px;
       transition: border 0.2s ease;
+      width: 350px;
     }
 
     #toolbar input[type="text"]:focus {
       outline: none;
       border-color: #666;
     }
-
+    .address{
+      color: white;
+      background-color: #32202F;
+      padding: 5px 10px;
+      border-radius: 50px;
+    }
     #webview {
       width: 100%;
-      height: calc(100vh - 60px); /* Adjust for the height of the toolbar */
+      height: calc(100vh - 60px);
     }
   </style>
 </head>
@@ -68,7 +74,7 @@
     <button id="forward" title="Forward"><i class="fas fa-arrow-right"></i></button>
     <button id="refresh" title="Refresh"><i class="fas fa-redo"></i></button>
     <button id="home" title="Home"><i class="fas fa-home"></i></button>
-    <input type="text" id="url" placeholder="Enter URL and press Enter">
+    <div class="address">ⓘ<input type="text" id="url" placeholder="Enter URL and press Enter">☆</div>
   </div>
   <webview id="webview" src="https://www.google.com" autosize="on"></webview>
 
