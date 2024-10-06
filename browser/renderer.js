@@ -22,11 +22,6 @@ function updateButtonStates() {
     }
   }
 
-  // Initial check on load
-  window.onload = () => {
-    updateButtonStates();
-  };
-
   webview.addEventListener('did-navigate', () => {
     updateButtonStates();
   });
