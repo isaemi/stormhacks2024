@@ -38,7 +38,7 @@ refreshButton.addEventListener('click', () => {
 
 // Go to home page
 homeButton.addEventListener('click', () => {
-  webview.src = 'http://209.87.57.134:3000';
+  webview.src = 'https://isaemi-app--80.prod1b.defang.dev/';
   urlInput.value = webview.src;
 });
 
