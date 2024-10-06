@@ -21,7 +21,7 @@
 
     #toolbar button {
       background-color: #303134;
-      color: #ffffff5e;
+      color: #888;
       padding: 10px;
       border-radius: 50%;
       border: none;
@@ -94,13 +94,28 @@
         background-position: 200%;
       }
     }
+    .loading-cursor {
+        cursor: wait;
+    }
+
+    #forward:disabled {
+        color: #808080;  /* Gray color */
+        cursor: not-allowed;  /* Show not-allowed cursor when disabled */
+        opacity: 0.5;  /* Slightly transparent */
+    }
+
+    #back:disabled {
+        color: #808080;  /* Gray color */
+        cursor: not-allowed;  /* Show not-allowed cursor when disabled */
+        opacity: 0.5;  /* Slightly transparent */
+    }
   </style>
   
 </head>
 
 <body>
   <div id="toolbar">
-    <button id="back" title="Back"><i class="fas fa-arrow-left"></i></button>
+    <button id="back" title="Back"><i disable class="fas fa-arrow-left"></i></button>
     <button id="forward" title="Forward"><i class="fas fa-arrow-right"></i></button>
     <button id="refresh" title="Refresh"><i class="fas fa-redo"></i></button>
     <button id="home" title="Home"><i class="fas fa-home"></i></button>

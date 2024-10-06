@@ -6,28 +6,63 @@ const homeButton = document.getElementById('home');
 const urlInput = document.getElementById('url');
 const loadingStreak = document.getElementById('loading-streak');
 
-// Show the loading streak when navigation starts
+const body = document.querySelector('body');
+
+function updateButtonStates() {
+    if (webview.canGoForward()) {
+      forwardButton.disabled = false;
+    } else {
+      forwardButton.disabled = true;
+    }
+
+    if (webview.canGoBack()) {
+        backButton.disabled = false;
+    } else {
+        backButton.disabled = true;
+    }
+  }
+
+  // Initial check on load
+  window.onload = () => {
+    updateButtonStates();
+  };
+
+  webview.addEventListener('did-navigate', () => {
+    updateButtonStates();
+  });
+  
+
+// Show the loading streak and change the cursor when navigation starts
 webview.addEventListener('did-start-loading', () => {
   loadingStreak.style.display = 'block';
+  body.classList.add('loading-cursor');
+  webview.classList.add('loading-cursor');
 });
 
-// Hide the loading streak when navigation finishes
+// Hide the loading streak and reset the cursor when navigation finishes
 webview.addEventListener('did-stop-loading', () => {
   loadingStreak.style.display = 'none';
+  body.classList.remove('loading-cursor');
+    webview.classList.remove('loading-cursor');
 });
-
 
 // Go back in the webview's history
 backButton.addEventListener('click', () => {
   if (webview.canGoBack()) {
+    backButton.disabled = false;
     webview.goBack();
+  } else {
+    backButton.disabled = true;
   }
 });
 
 // Go forward in the webview's history
 forwardButton.addEventListener('click', () => {
   if (webview.canGoForward()) {
+    forwardButton.disabled = false;
     webview.goForward();
+  } else {
+    forwardButton.disabled = true;
   }
 });
 
