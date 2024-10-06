@@ -1,6 +1,7 @@
 from fastapi import Body, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from llm import selectorFinder
+from pydantic import BaseModel
 
 app = FastAPI()
 
@@ -13,11 +14,16 @@ app.add_middleware(
 )
 
 
+# Define the request model
+class PromptRequest(BaseModel):
+    html: str
+    prompt: str
+
+
 @app.get("/")
 async def get_default():
     return "Bromium Server LOL", 200
 
-
 @app.post("/prompt")
-async def get_prompt(prompt: str, html: str = Body(..., media_type="text/html")):
-    return selectorFinder(html, prompt)
+async def get_prompt(response: PromptRequest):
+    return selectorFinder(response.html, response.prompt)
