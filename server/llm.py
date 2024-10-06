@@ -1,6 +1,6 @@
 from tinytune.prompt import prompt_job
 from tinytune.pipeline import Pipeline
-from server.gptcontext import GPTContext, GPTMessage
+from gptcontext import GPTContext, GPTMessage
 from dotenv import load_dotenv
 import os
 from bs4 import BeautifulSoup
