@@ -11,8 +11,6 @@ let recorderContext = null;
 
 window.onload = function () {
   console.log('preload.js loaded');
-  console.log(window.location.href);
-
 
   // Request access to the user's microphone
   try {
@@ -93,6 +91,9 @@ async function processAudio(audioChunks) {
 }
 
 function handleVoiceCommand(command) {
+  command = command.toLowerCase()
+  
+  console.log("Handle voice command")
   command = command?.toLowerCase();
 
   if (command.includes('scroll down')) {
@@ -114,8 +115,13 @@ function handleVoiceCommand(command) {
     window.scrollBy(100, 0);
     return;
   } else if (command.includes('start')) {
-    document.querySelector('.indexButton').click();
-    return;
+    const webview = document.getElementById('webview');
+    if (webview.src === "https://isaemi-app--80.prod1b.defang.dev/") {
+        webview.src = 'https://google.com'
+    } else {
+        console.log('URL does not match.');
+    }
+    
   } else {
     // chunk the command into smaller pieces
     let command_chunks = command.split(' ');
