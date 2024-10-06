@@ -3,19 +3,28 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build": "npx electron-packager . browser --platform=darwin --arch=x64 --icon=icon.png --out=dist/  --overwrite"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "electron": "^32.1.2"
+    "electron": "^32.1.2",
+    "electron-packager": "^17.1.2"
   },
   "dependencies": {
     "assemblyai": "^4.7.0",
     "axios": "^1.7.7",
     "dotenv": "^16.4.5",
     "openai": "^4.67.1"
+  },
+  "build": {
+    "appId": "com.browserapp.id",
+    "mac": {
+      "icon": "icon.icns"
+    }
+
   }
 }
