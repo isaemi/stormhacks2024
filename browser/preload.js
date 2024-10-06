@@ -3,36 +3,55 @@ require('dotenv').config();
 const OpenAI = require('openai');
 
 const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-    dangerouslyAllowBrowser: true,
+  apiKey: process.env.OPENAI_API_KEY,
+  dangerouslyAllowBrowser: true,
 });
 
-window.onload = function() {
+window.onload = function () {
   console.log('preload.js loaded');
-  
+
   // Request access to the user's microphone
   navigator.mediaDevices.getUserMedia({ audio: true })
     .then(stream => {
-      const mediaRecorder = new MediaRecorder(stream);
+      const audioContext = new AudioContext();
+      const source = audioContext.createMediaStreamSource(stream);
+
+      const bandpassFilter = audioContext.createBiquadFilter();
+      bandpassFilter.type = 'bandpass';
+      bandpassFilter.frequency.value = 1000;
+      bandpassFilter.Q.value = 1.0;
+
+      source.connect(bandpassFilter);
+
+      const destination = audioContext.createMediaStreamDestination();
+      bandpassFilter.connect(destination);
+
+
+      const mediaRecorder = new MediaRecorder(destination.stream);
       let audioChunks = [];
-      
+
       mediaRecorder.ondataavailable = event => {
         audioChunks.push(event.data);
-        
-        // Only process audio once you stop recording
-        if (mediaRecorder.state === 'inactive') {
-          processAudio(audioChunks);
-          audioChunks = [];
-        }
       };
-      
+
+      mediaRecorder.onstop = () => {
+        if (audioChunks.length > 0) {
+          processAudio(audioChunks);  // Process the 5-second audio chunk
+          audioChunks = [];  // Reset the chunks array for the next interval
+        }
+
+        // Restart recording immediately after stopping
+        mediaRecorder.start();
+        console.log('Restarted recording');
+      };
+
       // Start recording audio
       mediaRecorder.start();
-      
+
       // Stop and process the recording after 5 seconds (or adjust as necessary)
       setInterval(() => {
         if (mediaRecorder.state !== 'inactive') {
-          mediaRecorder.stop();
+          mediaRecorder.stop(); console.log('Stopped recording');
         }
       }, 5000); // Adjust the interval based on your needs
     })
@@ -46,16 +65,16 @@ async function processAudio(audioChunks) {
   const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
   const audioFile = new File([audioBlob], 'audio.wav', { type: 'audio/wav' });
 
-  
+
   try {
     const transcription = await openai.audio.transcriptions.create({
-        file: audioFile,
-        model: 'whisper-1',
-        response_format: "text",
+      file: audioFile,
+      model: 'whisper-1',
+      response_format: "text",
     });
 
     console.log('Transcript:', transcription);
-    
+
     handleVoiceCommand(transcription);
   } catch (error) {
     console.error('Error transcribing audio:', error);
